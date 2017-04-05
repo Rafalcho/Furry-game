@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       this.gameOver();
       this.showFurry();
+      var moveSound = new Audio('../sounds/woosh.wav');
+      moveSound.play();
       this.checkCoinCollision();
     };
     this.hideVisibleFurry = function() {
@@ -53,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     this.startGame = function() {
       this.idSetInterval = setInterval(function() {
         self.moveFurry();
-      }, 250);
+      }, 300);
     };
     this.turnFurry = function(event) {
       switch (event.which) {
@@ -74,6 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     this.checkCoinCollision = function() {
       if (this.furry.x === this.coin.x && this.furry.y === this.coin.y) {
+        var coinSound = new Audio('../sounds/coin.wav');
+        coinSound.play();
         document.querySelector('.coin').classList.remove('coin');
         this.score += 1;
         document.querySelector('#score strong').textContent = this.score;
@@ -83,7 +87,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     this.gameOver = function() {
       if (this.furry.x < 0 || this.furry.x > 9 || this.furry.y < 0 || this.furry.y > 9) {
+        this.hideVisibleFurry();
         clearInterval(this.idSetInterval);
+        this.showFurry = function() {};
+        var overSound = new Audio('../sounds/game_over.flac');
+        overSound.play();
+        document.querySelector('#over span').textContent = this.score;
+        document.querySelector('#over').classList.remove('invisible');
       }
     };
   }
