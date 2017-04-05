@@ -98,12 +98,32 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
 
-  var newGame = new Game();
-  newGame.showFurry();
-  newGame.showCoin();
-  newGame.startGame();
+  var play = document.querySelector('.play');
+  play.addEventListener('click', function() {
+    document.querySelector('#welcome').classList.add('invisible');
+    var newGame = new Game();
+    newGame.showFurry();
+    newGame.showCoin();
+    newGame.startGame();
 
-  document.addEventListener('keydown', function(event) {
-    newGame.turnFurry(event);
+    document.addEventListener('keydown', function(event) {
+      newGame.turnFurry(event);
+    });
   });
+
+  var playAgain = document.querySelector('.playAgain');
+  playAgain.addEventListener('click', function() {
+    document.querySelector('#over').classList.add('invisible');
+    document.querySelector('#score strong').textContent = '0';
+    document.querySelector('.coin').classList.remove('coin');
+    newGame = new Game();
+    newGame.showFurry();
+    newGame.showCoin();
+    newGame.startGame();
+
+    document.addEventListener('keydown', function(event) {
+      newGame.turnFurry(event);
+    });
+  });
+
 });
